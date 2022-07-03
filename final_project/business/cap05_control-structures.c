@@ -1,5 +1,5 @@
 /*
-  Capítulo 05 - Estruturas de Controle  
+  Capítulo 05 - Estruturas de Controle
 */
 
 #include <stdio.h>
@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 
-char Look; /* O caractere lido "antecipadamente" (lookahead) */
+char Look;      /* O caractere lido "antecipadamente" (lookahead) */
 int LabelCount; /* Contador usado pelo gerador de rótulos */
 
 /* Protótipos */
@@ -150,7 +150,7 @@ void EmitLn(char *fmt, ...)
     va_end(args);
 
     putchar('\n');
-} 
+}
 
 /* Reconhee e traduz um comando qualquer */
 void Other()
@@ -165,37 +165,39 @@ void Block(int exitLabel)
 
     follow = 0;
 
-    while (!follow) {
-        switch (Look) {
-            case 'i':
-                DoIf(exitLabel);
-                break;
-            case 'w':
-                DoWhile();
-                break;
-            case 'p':
-                DoLoop();
-                break;
-            case 'r':
-                DoRepeat();
-                break;
-            case 'f':
-                DoFor();
-                break;
-            case 'd':
-                DoDo();
-                break;
-            case 'b':
-                DoBreak(exitLabel);
-                break;
-            case 'e':
-            case 'l':
-            case 'u':
-                follow = 1;
-                break;
-            default:
-                Other();
-                break;
+    while (!follow)
+    {
+        switch (Look)
+        {
+        case 'i':
+            DoIf(exitLabel);
+            break;
+        case 'w':
+            DoWhile();
+            break;
+        case 'p':
+            DoLoop();
+            break;
+        case 'r':
+            DoRepeat();
+            break;
+        case 'f':
+            DoFor();
+            break;
+        case 'd':
+            DoDo();
+            break;
+        case 'b':
+            DoBreak(exitLabel);
+            break;
+        case 'e':
+        case 'l':
+        case 'u':
+            follow = 1;
+            break;
+        default:
+            Other();
+            break;
         }
     }
 }
@@ -204,7 +206,8 @@ void Block(int exitLabel)
 void Program()
 {
     Block(-1);
-    if (Look != 'e') Expected("End");
+    if (Look != 'e')
+        Expected("End");
     EmitLn("; END");
 }
 
@@ -237,7 +240,8 @@ void DoIf(int exitLabel)
     l2 = l1;
     EmitLn("JZ L%d", l1);
     Block(exitLabel);
-    if (Look == 'l') {
+    if (Look == 'l')
+    {
         Match('l');
         l2 = NewLabel();
         EmitLn("JMP L%d", l2);
