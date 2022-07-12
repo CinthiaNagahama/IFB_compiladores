@@ -1,0 +1,6 @@
+<not-factor>      ::= [!] <factor>
+<factor>          ::= <variable> | <constant> | '(' <expression> ')'
+<signed-term>     ::= [<addop>] <term>
+<term>            ::= <not-factor> (<mulop> <not-factor>)*
+<expression>      ::= <signed-term> (<addop> <term>)*
+<assignment>      ::= <variable> '=' <expression>
