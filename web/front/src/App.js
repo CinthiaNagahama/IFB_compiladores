@@ -86,11 +86,27 @@ function App() {
       </div>
       <div className='flex flex-col items-center'>
         <span className='text-purple-900 text-3xl font-bold'>Como codar</span>
+        <span className='text-purple-900 text-2xl font-semibold mt-5'>Palavras Reservadas e Operadores</span>
+        <div className='flex flex-row gap-x-3 mt-8 px-5 w-full'>
+          <Card
+            name='Palavras Reservadas'
+            code={
+              "PROGRAM -> Inicializa um programa\nBEGIN -> Inicia o escopo de código\nEND -> Finaliza o programa\n\nVAR -> Declara uma ou mais variáveis\n\nIF <condição> -> Inicia um bloco condicional\nELSE -> A ação é executada se a condição definida no IF for falsa\nENDIF -> Finaliza um bloco condicional\n\nWHILE <condição> -> Inicializa um laço condicional\nENDWHILE -> Finaliza um laço condicional"
+            }
+          />
+          <Card
+            name='Operadores'
+            code={
+              "+ -> Soma\n- -> Subtração\n* -> Multiplicação\n\\ -> Divisão\n\n!   -> Negação\n|   -> Ou\n~ -> Xor\n& -> E\n\n= -> Igual\n# -> Diferente\n< -> Menor que\n> -> Maior que\n\n; -> Colocado após uma declaração\n. -> Colocado no final do programa"
+            }
+          />
+        </div>
+        <span className='text-purple-900 text-2xl font-semibold mt-5'>Exemplos</span>
         <div className='flex flex-row gap-x-3 mt-8 px-5 w-full'>
           <Card name='Estrutura Base' code={"PROGRAM\nBEGIN\n\nEND."} />
           <Card name='Variáveis' code={"PROGRAM\nVAR a, b;\nBEGIN\na = 2;\nb = a;\nEND."} />
           <Card name='IF' code={"PROGRAM\nVAR a, b;\nBEGIN\na = 2;\nIF a > 0\nb = 10;\nELSE b = 20;\nENDIF\nEND."} />
-          <Card name='WHILE' code={"PROGRAM\nVAR a;\nBEGIN\na=0;\nWHILE a < 5\na = a + 1;\nENDWHILE\nEND."} />
+          <Card name='WHILE' code={"PROGRAM\nVAR a;\nBEGIN\na = 0;\nWHILE a < 5\na = a + 1;\nENDWHILE\nEND."} />
         </div>
       </div>
       <footer className='flex flex-col items-center p-5'>
