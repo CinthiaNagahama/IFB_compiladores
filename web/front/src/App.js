@@ -3,17 +3,12 @@ import "./App.css";
 import Card from "./components/card";
 
 function App() {
-  const [data, setData] = useState("PROGRAM\nBEGIN\n\nEND.");
+  const [code, setCode] = useState("PROGRAM\nBEGIN\n\nEND.");
+  const [outData, setOutData] = useState(null);
   const textAreaRef = useRef();
 
-  // React.useEffect(() => {
-  //   fetch("/api")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message));
-  // }, []);
-
   const onChange = (event) => {
-    setData(event.target.value);
+    setCode(event.target.value);
   };
 
   const onKeyDown = (event) => {
@@ -23,17 +18,37 @@ function App() {
       // TODO -> Fix tab bug
       const { selectionStart, selectionEnd } = event.target;
       // console.log(selectionStart, selectionEnd);
-      setData(data.substring(0, selectionStart) + "\t" + data.substring(selectionEnd));
+      setCode(code.substring(0, selectionStart) + "\t" + code.substring(selectionEnd));
       textAreaRef.current.selectionStart = textAreaRef.current.selectionEnd = selectionStart + 1;
 
-      // console.log(textAreaRef, data);
+      // console.log(textAreaRef, code);
     }
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(data);
-    // TODO -> Save data as file and call API
+    try {
+      const res = await fetch("/compiler", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: code }),
+      });
+
+      if (res.ok) {
+        const { data } = await res.json();
+        setOutData(data);
+        return;
+      }
+
+      const { msg } = await res.json();
+      setOutData(msg);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -43,20 +58,20 @@ function App() {
       </header>
       <div className='flex p-5'>
         <span className='text-zinc-900'>
-          Esse site apresenta um compilador para a linguagem Tiny Kiss feito tendo como base o tutorial
+          Esse site apresenta um compilador para a linguagem Tiny Kiss desenvolvido tendo como base o tutorial
           <a href='https://feliposz.github.io/tutorial-compiladores/'> "Vamos construir um compilador" </a>
           traduzido por Felipo Soranz (2002).
         </span>
       </div>
-      <div className='flex flex-row gap-x-3 p-5'>
-        <form className='flex flex-col items-center w-1/2 h-96' onSubmit={onSubmit}>
+      <div className='flex flex-row gap-x-5 p-5 max-h-1/3'>
+        <form className='flex flex-col items-center w-1/2' onSubmit={onSubmit}>
           <label className='bg-purple-900 flex justify-center w-full text-white text-xl font-medium py-1'>
             Entrada
           </label>
           <textarea
             ref={textAreaRef}
-            className='bg-zinc-300 border w-full h-4/5 py-1 px-2'
-            value={data}
+            className='bg-zinc-300 border w-full h-full py-1 px-2 resize-none'
+            value={code}
             onChange={onChange}
             onKeyDown={onKeyDown}
           />
@@ -64,9 +79,9 @@ function App() {
             Compilar
           </button>
         </form>
-        <div className='flex flex-col w-1/2 border'>
+        <div className='flex flex-col w-1/2 h-96 border'>
           <span className='bg-purple-900 flex justify-center text-white text-xl font-medium py-1'>Saída</span>
-          <span className='bg-zinc-300 h-full text-zinc-900 p-3 whitespace-pre'>{data}</span>
+          <span className='bg-zinc-300 h-full text-zinc-900 p-3 whitespace-pre overflow-auto'>{outData}</span>
         </div>
       </div>
       <div className='flex flex-col items-center'>
