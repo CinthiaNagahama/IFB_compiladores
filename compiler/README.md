@@ -21,3 +21,11 @@ Compilador para a linguagem Tiny feito tendo como base o tutorial [**Vamos const
 ## Observação Importante
 
 Código Final Gerado em Assembly para CPUs 80x86 16 bits.
+
+## Utilizando o Compilador
+
+| Comando    | Resultado                                  |
+| ---------- | ------------------------------------------ |
+| make build | Constrói o binário do compilador           |
+| make run   | Executa o arquivo binário                  |
+| make clean | Limpa os códigos objeto do diretório build |
