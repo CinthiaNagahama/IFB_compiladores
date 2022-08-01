@@ -4,7 +4,9 @@ const fs = require("fs");
 
 const PORT = 3001;
 const app = express();
+
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "../front/build")));
 
 app.post("/compiler", (req, res) => {
   try {
@@ -30,6 +32,10 @@ app.post("/compiler", (req, res) => {
     console.log(error);
     res.status(500).json({ msg: error });
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../front/build", "index.html"));
 });
 
 app.listen(PORT, () => {

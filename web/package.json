@@ -1,13 +1,17 @@
 {
-  "name": "web",
+  "name": "tiny-kiss-compiler",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "build": "cd front && npm install && npm run build"
+  },
+  "engines": {
+    "node": "v16.16.0"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cinthia M. N. Ungefehr",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
