@@ -113,7 +113,7 @@ function App() {
         <span className='text-zinc-900'>Criado por Cinthia M. N. Ungefehr</span>
         <span className='text-zinc-900'>
           Disponível no{" "}
-          <a className='text-purple-900' href='https://github.com/CinthiaNagahama/IFB_compiladores/final_project'>
+          <a className='text-purple-900' href='https://github.com/CinthiaNagahama/IFB_compiladores/'>
             GitHub
           </a>
         </span>
